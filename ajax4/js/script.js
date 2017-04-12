@@ -1,5 +1,5 @@
-var dataUrl = "data.json",
-    itensHtml = "item-snippet.html";
+var dataUrl = "json/data.json",
+    itensHtml = "templates/item-snippet.html";
 
 // função facilitadora para inserir HTML em um elemento
 function insereHtml(seletor, html) {
