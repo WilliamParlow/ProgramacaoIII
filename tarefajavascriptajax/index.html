@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Layout Responsivo com bootstrap 4</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="bootstrap-4.0.0/css/bootstrap.min.css">
+  <!-- My style -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+
+
+  <header class="nav-header">
+    <nav id="my-navbar" class="navbar navbar-toggleable-ms navbar-light bg-faded" role="navigation">
+      <div class="container-fluid">
+        <button type="button" id="toggle-button" name="button" class="hidden-sm-up navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target="#navBarTopics" aria-controls="navBarTopics" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a href="index.html" class="navbar-brand pull-left">
+          <h4>Comida LTDA</h4>
+        </a>
+        <div class="collapse navbar-collapse hidden-sm-up" id="navBarTopics">
+          <div id="menuList" class="navbar-nav text-center"></div>
+        </div>
+      </div>
+
+
+    </nav>
+  </header>
+
+  <header class="nosso-menu text-center" id="start">
+    <h1>Nosso Menu</h1>
+  </header>
+
+  <article id="pageContainer" class="container-fluid"></article>
+
+  <footer class="footer text-center">
+    <span class="footer-span">William Parlow Nichelatti - Programação III</span>
+    <span class="footer-span">Copyright (c) 2016 Copyright Holder All Rights Reserved.</span>
+  </footer>
+
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="./jquery/jquery-3.2.0.min.js"></script>
+  <!-- Tether, necessary for bootstrap tootips -->
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="bootstrap-4.0.0/js/bootstrap.min.js"></script>
+  <!-- Ajax Utils -->
+  <script src="js/ajax-utils.js"></script>
+  <!-- Ajax interaction -->
+  <script src="js/script.js"></script>
+
+  <footer id="scriptContent"></footer>
+
+</body>
+</html>

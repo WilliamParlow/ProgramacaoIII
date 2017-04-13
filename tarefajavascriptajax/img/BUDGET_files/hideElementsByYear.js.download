@@ -1,0 +1,16 @@
+function hideElementsByYear(botao) {
+  var nomeCelula = botao.id;
+  var celulas = document.getElementsByName(nomeCelula);
+
+  $(celulas).toggleClass('drill');
+  $(botao).toggleClass('year-button-active');
+
+  botao.blur();
+
+  if($(celulas).hasClass('drill')) {
+    botao.innerHTML = "Mostrar " + botao.id;
+  } else {
+    botao.innerHTML = "Ocultar " + botao.id;
+  }
+
+}

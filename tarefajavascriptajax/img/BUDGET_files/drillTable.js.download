@@ -1,0 +1,146 @@
+/* Funções de execução de drill down */
+
+/* Funções destinadas à visao sintética do budget */
+function drillTable(elementoPai) {
+  var index = elementoPai.rowIndex;
+  var visao = document.getElementById('visao');
+  var row = visao.rows;
+
+  row = row[index];
+
+  var $nameFilho = "filho_pai" + row.id.substring(3, row.id.length);
+  var $filhos = document.getElementsByName($nameFilho);
+
+  $($filhos).toggleClass('drill');
+
+  // setDivContainerHeight();
+
+}
+
+
+
+
+
+
+/* Funções destinadas à visao analítica do budget */
+
+/* Manipula Elementos pais destacados em verde (AnaliticG -> Green)*/
+function drillTableAnaliticG(elementoPai) {
+
+  var row_index = elementoPai.rowIndex;
+  var table = document.getElementById(elementoPai.dataset.visao);
+  var tableRow = table.rows[row_index];
+
+  var $nameFilho; // = "filho_pai" + concatenação de identificação dos pais;
+  var $filhos; // Recebe como objeto, os elementos filho que possuem o mesmo nome
+  var $nameSubPai = "subpai" + tableRow.id.substring(3, tableRow.id.length);
+  var $subPai = document.getElementsByName($nameSubPai);
+  var $isNextElementSubPai;
+
+  $isNextElementSubPai = isNextElementSubPai(tableRow);
+
+  $($subPai).toggleClass('drill');
+
+  if ($isNextElementSubPai) {
+
+    for(var index = 0, subpai; index < ($subPai.length / 2); index++) {
+      subpai = $subPai[index];
+      $nameFilho = "filho_pai" + subpai.id.substring(6, subpai.id.length);
+
+      $filhos = document.getElementsByName($nameFilho);
+
+      if (!$($filhos).hasClass("drill")) {
+        $($filhos).toggleClass('drill');
+
+      }
+
+    }
+
+  } else {
+
+    if (isNextElementNotNull(tableRow)) {
+
+      $nameFilho = tableRow.nextSibling.getAttribute("name");
+      $filhos = document.getElementsByName($nameFilho);
+
+      $($filhos).toggleClass('drill');
+
+    }
+
+  }
+
+  setDivContainerHeight();
+
+}
+
+
+
+
+
+
+/* Manipula Elementos pais destacados em amarelo (AnalitcY -> Yellow)*/
+function drillTableAnaliticY(elementoPai) {
+
+  var tableId = elementoPai.dataset.visao;
+  var row_index = elementoPai.rowIndex;
+
+  var table = document.getElementById(tableId);
+  var tableRow = table.rows[row_index];
+
+  var $nameFilho = "filho_pai" + tableRow.id.substring(6, tableRow.id.length);
+  var $filhos = document.getElementsByName($nameFilho);
+
+  $($filhos).toggleClass('drill');
+
+  setDivContainerHeight();
+
+}
+
+
+
+
+
+/* Manipula elemenots da tabela de banco */
+function drillTableBank(elementoPai) {
+  var filhosBanco = document.getElementsByName(elementoPai.dataset.filhos);
+  $(filhosBanco).toggleClass('drill');
+
+  var lastTable = document.getElementsByClassName('DTFC_LeftFootWrapper');
+  lastTable = lastTable[lastTable.length - 1];
+
+  $(lastTable).toggleClass('top-0');
+
+  setDivContainerHeight();
+}
+
+
+
+
+
+
+/* Verifica se o próximo elemento é subPai */
+function isNextElementSubPai(elementoPai) {
+  var isNextElement = false;
+
+  if (elementoPai.nextSibling != null && elementoPai.nextSibling.id.substring(0, 6) == "subpai") {
+    isNextElement = true;
+  }
+
+  return isNextElement;
+}
+
+
+
+
+
+/* Verifica se o próximo elemento é nulo */
+function isNextElementNotNull(elementoPai) {
+  var isNull = false;
+
+  if (elementoPai.nextSibling != null) {
+    isNull = true;
+  }
+
+  return isNull;
+
+}

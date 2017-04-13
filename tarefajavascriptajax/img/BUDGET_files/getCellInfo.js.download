@@ -1,0 +1,215 @@
+/*
+  ID do modal Header - modal_header
+  ID do modal body - modal_body
+  var modalHeader = document.getElementById("modal_header");
+  var modalBody = document.getElementById("modal_body");
+  Var conteudo = Todo a estrutura concatenada para fazer um innerHTML
+*/
+// Função que cria o conteúdo do modal
+function createModalContent(elemento, isOrcado, isPrevisto, isRealizado, ano, isDataNotNull, isSintetico) {
+  if (isSintetico) {
+    createSinteticContent(elemento, isOrcado, isPrevisto, isRealizado, ano, isDataNotNull);
+
+  } else {
+    createAnaliticContent(elemento, isOrcado, isPrevisto, isRealizado, ano, isDataNotNull);
+
+  }
+
+}
+
+
+
+
+
+// Função para criar o conteúdo do modal caso seja no sintético do budget
+function createSinteticContent(elemento, isOrcado, isPrevisto, isRealizado, ano, isDataNotNull) {
+  var modalHeader = document.getElementById("modal_header");
+  var modalBody = document.getElementById("modal_body");
+  var modalFoot = document.getElementById("span-foot");
+
+
+  var nomeDescricao = getDescricaoLinha(elemento);
+  var valor = getValor(elemento);
+  var nomeElementoPai = getPaiLinha(elemento);
+  var tipoOrcamento = getTipoOrcamento(isOrcado, isPrevisto, isRealizado);
+  var mes = getMes(elemento);
+
+  var closeButton = '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+  var headContent = "<h1 class='modal-title' id='myModalLabel'><span class='bold'>Descrição Pai:</span> "+nomeElementoPai+"</h1><br/><h4 class='modal-title' id='myModalLabel'><span class='bold'>Descrição Linha:</span> "+nomeDescricao+"</h4>";
+  var footContent = "<span class='bold'>Valor:</span> "+valor;
+  var bodyContent = "<p><span class='bold'>Tipo de orçamento:</span> "+tipoOrcamento+"</p></p><p><span class='bold'>Mês:</span> "+mes+"</p><p><span class='bold'>Ano:</span> "+ano+"</p>";
+
+  if (isDataNotNull) {
+    bodyContent += "<p><span class='bold'>Valor:</span> "+valor+"</p>";
+  } else {
+    bodyContent += "<p><span class='bold'>Valor:</span> "+valor+"</p><h1 class='bold alert-warning'><i class='fa fa-exclamation-triangle' aria-hidden='true'></i> O valor não foi encontrado no banco de dados e não pode ser editado!</h1>";
+  }
+
+  modalHeader.innerHTML = closeButton+""+headContent;
+  modalBody.innerHTML = bodyContent;
+  modalFoot.innerHTML = footContent;
+}
+
+
+
+
+// Função para criar o conteúdo do modal caso seja no analítico do budget
+function createAnaliticContent(elemento, isOrcado, isPrevisto, isRealizado, ano, isDataNotNull) {
+  var modalHeader = document.getElementById("modal_header");
+  var modalBody = document.getElementById("modal_body");
+  var modalFoot = document.getElementById("span-foot");
+
+
+  var nomeDescricao = getDescricaoLinha(elemento);
+  var valor = getValor(elemento);
+  var nomeElementoSubPai = getElementoSubPai(elemento);
+  var nomeElementoPai = getPaiLinha(elemento);
+  var tipoOrcamento = getTipoOrcamento(isOrcado, isPrevisto, isRealizado);
+  var mes = getMes(elemento);
+
+  var closeButton = '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+  var headContent = "<h1 class='modal-title' id='myModalLabel'><span class='bold'>Descrição Pai:</span> "+nomeElementoPai+"</h1><h1 class='modal-title' id='myModalLabel'><span class='bold'>Descrição SubPai:</span> "+nomeElementoSubPai+"</h1><h4 class='modal-title' id='myModalLabel'><span class='bold'>Descrição Linha:</span> "+nomeDescricao+"</h4>";
+  var footContent = "<span class='bold'>Valor:</span> "+valor;
+  var bodyContent = "<p><span class='bold'>Tipo de orçamento:</span> "+tipoOrcamento+"</p></p><p><span class='bold'>Mês:</span> "+mes+"</p><p><span class='bold'>Ano:</span> "+ano+"</p>";
+
+  if (isDataNotNull) {
+    bodyContent += "<p><span class='bold'>Valor:</span> "+valor+"</p>";
+  } else {
+    bodyContent += "<p><span class='bold'>Valor:</span> "+valor+"</p><h1 class='bold alert-warning'><i class='fa fa-exclamation-triangle' aria-hidden='true'></i> O valor não foi encontrado no banco de dados e não pode ser editado!</h1>";
+  }
+
+  modalHeader.innerHTML = closeButton+""+headContent;
+  modalBody.innerHTML = bodyContent;
+  modalFoot.innerHTML = footContent;
+}
+
+
+
+
+// função que pega o nome do primeiro elemento da linha do elemento pai, pegando
+// o valor do conteúdo referente a natureza
+function getPaiLinha(elementoLinha) {
+  var linha = elementoLinha.parentElement;
+  var parentName = "";
+
+  while (linha.id.substring(0, 3) != "pai") {
+    linha = linha.previousSibling
+  }
+
+  parentName = linha.childNodes[0].textContent;
+
+  return parentName;
+}
+
+
+
+// Função que pega a descrição da natureza referente a linha da celula clicada
+function getDescricaoLinha(elementoLinha) {
+  var nomeDescricaoLinha = elementoLinha.parentElement.childNodes[0].textContent;
+
+  return nomeDescricaoLinha;
+}
+
+
+
+// Função que retorna o tipo de orçamento
+function getTipoOrcamento(isOrcado, isPrevisto, isRealizado) {
+  var orcamento = "";
+
+  if(isOrcado) {
+    orcamento = "Orçado";
+
+  } else if(isPrevisto) {
+    orcamento = "Previsto";
+
+  } else if(isRealizado) {
+    orcamento = "Realizado";
+
+  } else {
+    orcamento = "Não possui um tipo de orçamento";
+
+  }
+
+  return orcamento;
+}
+
+
+
+// Função que pega o valor do conteúdo da celula clicada
+function getValor(elementoLinha) {
+  return elementoLinha.textContent;
+}
+
+
+
+// Função que pega o mes referente a celula clicada
+function getMes(elementoLinha) {
+  var nomeMes = "";
+  var intersect = document.getElementById("intersect");
+
+  nomeMes = intersect.parentElement.childNodes[elementoLinha.cellIndex].textContent;
+
+  nomeMes = getFirstWord(nomeMes);
+
+  return nomeMes;
+}
+
+
+
+
+
+// Função que pega o elemento Sub Pai
+function getElementoSubPai(elementoLinha) {
+  var linha = elementoLinha.parentElement;
+  var subPaiNome = "";
+
+  while (linha.id.substring(0, 6) != "subpai") {
+
+    if (linha.id.substring(0, 3) == "pai") {
+      subPaiNome = "Não possui subpai"
+      break;
+
+    } else {
+      linha = linha.previousSibling;
+      subPaiNome = linha.childNodes[0].textContent;
+
+    }
+  }
+
+  return subPaiNome;
+}
+
+
+
+// Função que pega a primeira palavra em uma string de varias palavras
+function getFirstWord(str) {
+  var fisrtWord = "";
+
+  if (str.indexOf(' ') === -1) {
+    fisrtWord = str;
+  } else {
+      fisrtWord = str.substr(0, str.indexOf(' '));
+  }
+
+  return fisrtWord;
+};
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//////////////////// Mostrar nome do mes do elemento celula ////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+/* Finção que obtem o mes da celula atual e mostra o nome do mes em um span no
+   canto esquerdo da tela */
+function showCellMonth(element) {
+  var mes = getMes(element);
+  var span = document.getElementById('monthContent');
+
+  span.innerHTML = "Mês: " + mes;
+
+}

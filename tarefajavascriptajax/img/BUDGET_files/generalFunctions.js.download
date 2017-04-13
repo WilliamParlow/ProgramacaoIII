@@ -1,0 +1,310 @@
+/* Função que reajusta o atributo height da div container das tabelas e da coluna fixa vertical esquerda */
+function setDivContainerHeight() {
+
+  var $divContainer = document.getElementsByName('divContainer');
+  $($divContainer).css('height', 'auto');
+
+}
+
+function setAnchorActive() {
+  var documentTitle = document.title;
+  var element = "";
+
+  switch (documentTitle) {
+    case "HOME":
+    element = document.getElementById("HOME");
+    $(element).addClass('active');
+    break;
+
+    case "BUDGET":
+    element = document.getElementById("BUDGET");
+    $(element).addClass('active');
+    break;
+
+    case "FORECASTING":
+    element = document.getElementById("FORECASTING");
+    $(element).addClass('active');
+    break;
+
+    case "DIARIO":
+    element = document.getElementById("DIARIO");
+    $(element).addClass('active');
+    break;
+
+    case "DIARIO CLONE":
+    element = document.getElementById("DIARIO_CLONE");
+    $(element).addClass('active');
+    break;
+
+    case "DIARIO ACUMULADO":
+    element = document.getElementById("DIARIO_ACUMULADO");
+    $(element).addClass('active');
+    break;
+
+    case "ATUALIZACAO":
+    element = document.getElementById("ATUALIZACAO");
+    $(element).addClass('active');
+    break;
+
+    case "CLONAR VISAO":
+    element = document.getElementById("CLONAR_VISAO");
+    $(element).addClass('active');
+    break;
+
+    case "IMPORT":
+    element = document.getElementById("IMPORT");
+    $(element).addClass('active');
+    break;
+
+    default:
+    alert("Parametro incorreto");
+    break;
+
+  }
+}
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+// Funções para edição das celulas
+var dadosEmpresa;
+var dadosNatureza;
+var dadosData;
+var qtdRegistros;
+var dadosRecno;
+var dadosValor;
+var tipoSald;
+var dadosCartei;
+
+function gravar(dadosRecno){
+  this.dadosRecno = dadosRecno;
+}
+
+function gravarInfoDados(cartei,tipo,empresa,natureza,data){
+  // console.log("entrei em grava");
+  this.dadosCartei = cartei;
+  this.tipoSald = tipo;
+  this.dadosEmpresa = empresa;
+  this.dadosNatureza = natureza;
+  this.dadosData = data;
+  var pagina = "DocumentosDeCodigoAuxiliares/dataCount.php";
+  var dadosajax = {
+    'cartei' : dadosCartei,
+    'empresa' : dadosEmpresa,
+    'nat' : dadosNatureza,
+    'data': dadosData,
+    'tipo': tipoSald
+  };
+  $.ajax
+  ({
+    type: 'POST',
+    dataType: 'json',
+    url: pagina,
+    data: dadosajax,
+    beforeSend: function () {
+      // console.log(dadosajax);
+    },
+    error: function(){
+      // console.log("erro");
+      toastr.error("Erro ao buscar dados");
+    },
+    success: function (msg)
+    {
+      if(msg.length > 0){dadosRecno = msg[0].rec;}
+      qtdRegistros = msg.length;
+      // console.log(msg.length);
+      // console.log(msg);
+    }
+  });
+}
+function inserirRegisto()
+{
+  var gravo = true;
+  //dados a enviar, vai buscar os dados dos campos que queremos enviar para a BD
+  var dadosajax = {
+    'empresa' : dadosEmpresa,
+    'recno' : dadosRecno,
+    'valor': dadosValor
+  };
+  paginaurl = 'DocumentosDeCodigoAuxiliares/gravar.php';
+  $.ajax({
+    //url da pagina
+    url: paginaurl,
+    //parametros a passar
+    data: dadosajax,
+    //tipo: POST ou GET
+    type: 'POST',
+    //cache
+    cache: false,
+    //se ocorrer um erro na chamada ajax, retorna este alerta
+    //possiveis erros: pagina nao existe, erro de codigo na pagina, falha de comunicacao/internet, etc etc etc
+    error: function(){
+      toastr.error("Erro ao inserir registro");
+    },
+    //retorna o resultado da pagina para onde enviamos os dados
+    success: function(result)
+    {
+      //se foi inserido com sucesso
+      if($.trim(result) == '1')
+      {
+        toastr.success("O seu registo foi inserido com sucesso!");
+      }
+      //se foi um erro
+      else
+      {
+        toastr.error("Ocorreu um erro ao inserir o seu registo!");
+        gravo =  false;
+      }
+    }
+  });
+  return gravo;
+}
+
+$(function() {
+  $(".visao td").dblclick(function() {
+    switch (qtdRegistros) {
+      case 0:
+      toastr.error("Nao existe dados no banco");
+      break;
+      case 1:
+      var conteudoAtual = $(this).text();
+      var removeInputClass = false;
+      $(this).html("<input id='dadosValorTabela' type='text' value='" + conteudoAtual + "' />");
+      $("#dadosValorTabela").maskMoney({symbol:'', showSymbol:true, thousands:'.', decimal:',', symbolStay: true});
+      $(this).children().first().focus();
+      $(this).children().first().keypress(function (e) {
+        // Se o tecla enter for precionada (13 é equivalente ao dadosValor decimal da tabela ASC
+        // do enter)
+        if (e.which == 13) {
+          var novoConteudo = $(this).val();
+          dadosValor = novoConteudo;
+          if(inserirRegisto()){
+            $(this).parent().text(novoConteudo);
+          }else{
+            $(this).parent().text(conteudoAtual);
+          }
+          limparVariaveis();
+        }
+      });
+      $(this).children().first().blur(function(){
+        $(this).parent().text(conteudoAtual);
+        limparVariaveis();
+      });
+      break;
+      default://Se o numero de registro for maior que 1, abr modal.
+      carregaModalEdicao();
+      $('#modalEdicao').modal();
+      break;
+    }
+  });
+  $('#modalEdicao').on('hidden.bs.modal', function () {
+    limparVariaveis();//Limpa as variaveis locais quando modal fechar
+  });
+});
+//Limpa as variaveis locais
+function limparVariaveis(){
+  dadosEmpresa = "";
+  dadosNatureza = "";
+  dadosData = "";
+  qtdRegistros = 0;
+  dadosRecno = "";
+  dadosValor = "";
+  tipoSald = "";
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//////////////////////  SALVAR DADOS DIGITADOS ANTERIORMENTE ///////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+function saveTable() {
+  var select = document.getElementsByClassName('select');
+  var form = document.getElementById('formulario');
+  var inputs = document.getElementsByTagName('input');
+
+  // Função que configura os options dos selects
+  setSelectedElements(select);
+
+  // Função que configura os inputs
+  setInputElements(inputs);
+
+  // Função que configura os inputs do tipo checkbox
+  setInputCheckboxElements(inputs);
+
+  // Após todo o processo acima, salva o item em localStorage
+  localStorage.setItem('formSave', form.innerHTML);
+  localStorage.setItem('title', document.title);
+
+  // Mensagem confirmando que foi salvo com sucesso
+
+  // alert('saved');
+  // console.log(localStorage.getItem('formSave'));
+  // console.log(form.innerHTML);
+}
+
+// Define os atributos select
+function setSelectedElements(selectElements) {
+  $.each(selectElements, function (index, selectAtual) {
+
+    $.each(selectAtual, function(index2, option) {
+
+      if (option.selected != undefined) {
+        if (option.selected) {
+          option.setAttribute('selected', '');
+        } else {
+          option.removeAttribute('selected');
+        }
+      }
+
+    });
+
+  });
+}
+
+// Define os atributos do input
+function setInputElements(inputElements) {
+  $.each(inputElements, function(index, inputAtual) {
+
+    inputAtual.setAttribute('value', inputAtual.value);
+
+  });
+}
+
+// Define os atributos do input checkbox
+function setInputCheckboxElements(inputElements) {
+  $.each(inputElements, function(index, inputAtual) {
+
+    if (inputAtual.type === "checkbox") {
+
+      if (inputAtual.checked) {
+        inputAtual.setAttribute('checked', '');
+      } else {
+        inputAtual.removeAttribute('checked');
+      }
+
+    }
+
+  });
+}
+
+// <!-- Script de execução ao dar um sibmit -->
+// pega o evento submit no fomulário #formulario
+$('#formulario').submit( function(event) {
+  // define o conteúdo do formlario #formulario para o conteúdo salvo em localStorage
+  var form = document.getElementById('formulario');
+  form.innerHTML = localStorage.getItem('formSave');
+
+  // Previne o reload e manda mensagem de sucesso
+  event.preventDefault();
+  // alert("submited");
+});
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////

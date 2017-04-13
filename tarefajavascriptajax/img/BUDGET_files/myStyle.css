@@ -1,0 +1,419 @@
+/* TEXT FONTS */
+@import url('libs/Fonts/googlefonts.css');
+
+/* Definições gerais de todos os elementos */
+* {
+  font-family: 'Overpass', sans-serif;
+  font-size: 12px !important;
+  /*font-family: 'Padauk', sans-serif;*/
+  /*font-family: 'Montserrat', sans-serif;*/
+}
+
+/* - - - - - - - - - - - - - - - - -*/
+/* Definições da barra de navegação */
+/* - - - - - - - - - - - - - - - - -*/
+
+/* Definições gerais de sobreescrita do bootstrap */
+nav.navbarStyle {
+  background-color: #2C4770 !important;
+  border: none;
+  border-radius: 0 !important;
+}
+
+/* Definições das ancoras da navegação */
+nav.navbarStyle a {
+  color: #fff !important;
+}
+
+/* Definição das ancoras contidas no ul */
+ul.dropdown-menu a {
+  color: #000 !important;
+}
+
+/* Background do último elemento da navegação */
+.lastElement {
+  background-color: #003 !important;
+  transition: all .250s ease-out;
+}
+
+/* Background do último elemento da navegação com ação de hover */
+.lastElement:hover {
+  background-color: #004 !important;
+  transition: all .250s ease-in;
+}
+
+/* - - - - - - - - - - - - - - - */
+/* Definições gerais das tabelas */
+/* - - - - - - - - - - - - - - - */
+
+/* Esconde as linhas da tabela com essa classe */
+.drill {
+  display: none;
+}
+
+/* Define o tipo de cursor do elemento */
+.pointer {
+  color: #000;
+  cursor: pointer;
+}
+
+/* Define o tamanho dos elementos pointer */
+.pointer:not(.elemento-subpai) {
+  height: 20px !important;
+}
+
+#paib {
+  height: 0 !important;
+}
+
+/* Define o tamanho dos elementos sub-pai */
+.elemento-subpai {
+  height: 20px !important;
+}
+
+/* Define a cor dos elementos th */
+.pointer th {
+  color: #000 !important;
+}
+
+/* Definições gerais da tabela */
+table {
+  float: left !important;
+}
+
+table * {
+  text-align: right;
+}
+
+/* alinha o conteúdo dos elementos à direita */
+tfoot tr td, thead tr td {
+  text-align: right ;
+}
+
+/*------------ Colunas fixas da tabela -----------*/
+
+.table-container {
+    position: relative !important;
+    width: 100% !important;
+    min-height: 100% !important;
+    /*border: 2px solid red !important;*/
+    display: inline-block !important;
+    overflow: scroll;
+    float: left !important;
+    margin-top: 50px !important;
+}
+
+tr {
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+}
+
+.right {
+    overflow: auto  !important;
+}
+
+/*------------ Colunas fixas da tabela -----------*/
+
+/* alinha o conteúdo dos primeiros elementos à esquerda */
+div.right * {
+  text-align: right;
+}
+
+div.headcol * {
+  text-align: left;
+}
+
+/* Definição de background par/impar */
+table tr.elemento-filho:nth-child(2n) {
+  background-color: #ccc !important;
+}
+
+/* Definição de espaçamento da tabela */
+table th, table td {
+  padding: 0px 2px !important;
+  white-space: nowrap !important;
+}
+
+/* Definições gerais do cabeçalho da tabela */
+table thead th {
+  background-color: #9DACC4 !important;
+}
+
+/* Definições gerais das linhas da tabela caso passe o mouse por cima */
+#visao_wrapper table tbody tr:hover {
+  color: #000;
+  font-weight: bold;
+}
+
+/* Definições do texto do formulário */
+form table table * {
+  color: #000;
+  font-weight: bold;
+}
+
+/* Estilo das linhas da tabela, exceto as linhas pai */
+table tr:not(.pointer) * {
+  cursor: default;
+  color: #000;
+}
+
+/* Definição das margens dos elementos da tabela */
+div.right table td, div.right table th {
+  border-left: solid 1px rgba(0, 0, 0, .2);
+}
+
+/* Definição de duração de animação */
+.dropdown-toggle, ul li {
+  transition: all .125s ease-in-out;
+}
+
+/* Estilo do menu dropdown aberto */
+ul li:hover:not(.open) {
+  background-color: #003;
+  transition: all .125s ease-in-out;
+}
+
+
+/* - - - - - - - - - - - - - - -*/
+/* Definições da página da home */
+/* - - - - - - - - - - - - - - -*/
+
+/* Definições de margem superior da div principal */
+div#columnchart_material div div  {
+  margin-top: 60px;
+}
+
+/* - - - - - - - - - - - - - - - - - - - */
+/* Definições das visões dos formulários */
+/* - - - - - - - - - - - - - - - - - - - */
+/* Definições da Div principal das telas iniciais dos formulários de envio de dados */
+div[align="center"] {
+  margin-top: 50px !important;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+/* Definições das linhas das tabelas do formulário */
+div[align="center"] tr {
+  background-color: #fff !important;
+}
+
+/* Espaçamento das celulas continas na div abaixo */
+div[align="center"] tr td {
+  padding: 16px 40px;
+}
+
+/* Margem das tabelas dos formulários e Definições de espaçamento do formulário */
+form table {
+  margin: 0;
+  width: auto;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - -*/
+/* Definições da página de importação de arquivos */
+/* - - - - - - - - - - - - - - - - - - - - - - - -*/
+
+/* Div que contém o conteúdo */
+div#container {
+  display: flex;
+  justify-content: center;
+}
+
+/* Estilização da section */
+div.container-fluid section {
+  margin-top: 60px;
+}
+
+/* Definições de formulário */
+#form {
+  color: #555;
+  padding: 20px 20px;
+  background: #DDE;
+  margin-top: 50px;
+  width: 96%;
+}
+
+/* - - - - - - - - - - - - - - - - - - - -*/
+/* Definições de sobreposição de boostrap */
+/* - - - - - - - - - - - - - - - - - - - -*/
+
+/* Estilo do dropdown-menu ao ser aberto */
+.open .dropdown-menu a {
+  color: #000 !important;
+}
+
+/* Estilo do dropdown-menu à ação de hover */
+.dropdown-menu li:hover {
+  background-color: #003 !important;
+}
+
+/* Estilo da caixa de seleção de linhas a serem mostradas na tabela */
+div.dataTables_length label select {
+  border-radius: 4px;
+  padding: 2px;
+}
+
+/* Estilo da input de busca da tabela */
+/*div#visao_filter label input,
+div#visao1_filter label input,*/
+input {
+  border-radius: 4px !important;
+  padding: 4px !important;
+  border: solid 1px rgba(0,0,0,.3) !important;
+}
+
+/* Estilo das informações das tabelas */
+.intersect {
+  font-weight: normal !important;
+  color: #000 !important;
+}
+
+/* Estilo de input */
+.myInputStyle {
+  padding: 1px !important;
+}
+
+/* Definição de scrool-bar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: #9DACC4;
+}
+
+/* Cor da barra de rolagem */
+::-webkit-scrollbar-thumb {
+  background: #2C4770;
+}
+
+/* Definições da div de checkbox */
+div.checkbox {
+  text-align: left !important;
+}
+
+/* Classes de cores */
+
+/* Verde */
+.green {
+  color: #090 !important;
+}
+
+/* verde fraco */
+.ligth-green {
+  color: #0F0 !important;
+}
+
+/* Azul */
+.blue {
+  color: #007 !important;
+}
+
+/* Preto */
+.black {
+  color: #000 !important;
+}
+
+/* vermelho */
+.red {
+  color: #900 !important;
+}
+
+/* vermelho fraco */
+.ligth-red {
+  color: #F00 !important;
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* - - - - - - - -  - - Outros - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+
+/* Define o cursor como pointer */
+.alert-pointer {
+  cursor: pointer !important;
+}
+
+/* Define o texto em negrito */
+.bold {
+  font-weight: bold !important;
+}
+
+/* Definição do botão do bootstrap com modificações */
+.year-button {
+  margin: 2px 2px;
+  color: #FFF;
+  background-color: #9DACC4;
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border-radius: 4px;
+  border: solid 1px transparent;
+}
+
+/* Muda a cor do botão de esconder e mostrar os dados do ano */
+.year-button-active {
+  background-color: #597196;
+}
+
+/* Cor da seção de navegação atual */
+.active {
+  background-color: #003 !important;
+}
+
+/* Cor da seção de navegação atual */
+ul.dropdown-menu .active {
+  color: #fff !important;
+}
+
+/*
+.cell-edit {
+  background-color: #ffcc00;
+}
+*/
+
+/* Alinha o elemento à direita */
+.to-right {
+  text-align: right !important;
+}
+
+.to-center {
+  text-align: center;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+/* - - - - - Definições do local para mostrar o mes da celula - - - - - - - - */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+
+#budgetForm {
+  display: block;
+  margin-top: 60px;
+}
+
+.checkbox-style {
+  margin: 0 10px 0 0;
+}
+
+.checkbox-style:first-child {
+  margin-left: 20px !important;
+}
+
+/*.bordered {
+  border: solid 4px rgba(0,0,0,.2)!important;
+}*/
+
+
+input, select{
+  height: 20px !important;
+  padding: 0 !important
+}
